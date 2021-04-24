@@ -1,10 +1,11 @@
 const http = require("https");
 const express=require("express");
 const bodyParser = require('body-parser')
+const PORT=process.env.PORT||5000
 
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
-const CONNECTION_URL ="mongodb://127.0.0.1:27017/" ; //database connection
+const CONNECTION_URL =process.env.PORT||"mongodb://127.0.0.1:27017/" ; //database connection
 const DATABASE_NAME = "dictionary";                  //databasename
 
 
@@ -73,8 +74,11 @@ app.post("/post",(req,res)=>{
     });
 });
 var database, collection;
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static('client/build'))
+}
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     MongoClient.connect(CONNECTION_URL,{ useUnifiedTopology: true }, (error, client) => {
        //connecting to mongodb 
       if(error) {

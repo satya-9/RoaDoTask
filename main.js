@@ -79,7 +79,7 @@ if(process.env.NODE_ENV==='production'){
 }
 
 app.listen(PORT, () => {
-    MongoClient.connect(CONNECTION_URL,{ useUnifiedTopology: true, useNewUrlParser: true  }, (error, client) => {
+    MongoClient.connect(process.env.PORT||"mongodb://localhost:27017/",{ useUnifiedTopology: true, useNewUrlParser: true  }, (error, client) => {
        //connecting to mongodb 
       if(error) {
             throw error;

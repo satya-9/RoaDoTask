@@ -79,7 +79,7 @@ if(process.env.NODE_ENV==='production'){
 }
 
 app.listen(PORT, () => {
-    MongoClient.connect(process.env.PORT||"mongodb+srv://satya123:saty143@cluster0.grrou.mongodb.net/dictionary",{ useUnifiedTopology: true, useNewUrlParser: true  }, (error, client) => {
+    MongoClient.connect(process.env.MONGODB_URI||"mongodb+srv://satya123:saty143@cluster0.grrou.mongodb.net/dictionary",{ useUnifiedTopology: true, useNewUrlParser: true  }, (error, client) => {
        //connecting to mongodb 
       if(error) {
             throw error;

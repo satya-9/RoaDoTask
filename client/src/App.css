@@ -31,6 +31,8 @@
 }
 .All{
   margin-top: 100px;
+  display: flex;
+  flex-direction: column-reverse;
 }
 .App{
   display: flex;
@@ -62,4 +64,19 @@
   position: absolute;
   height: 30px;
   right: 20px;
+}
+.definition{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: -35px;
+}
+.parts{
+  position: relative;
+  top: -20px;
+}
+.space{
+  width: 10px;
+}
+.examples{
+  margin-bottom: 20px;
 }

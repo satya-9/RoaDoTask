@@ -11,6 +11,7 @@ function App() {
       isFetching: false,
     word:[]
   });
+  const [frontpagedivclick, setfrontpagedivclick] = useState("")
   const [searchterm, setsearchterm] = useState("")
   const [searchedterm, setsearchedterm] = useState([])
   const [searching, setsearching] = useState(false)
@@ -32,7 +33,25 @@ useEffect(() => {
 
       })
       console.log(array)
-      setData({fetcheddata: response.data, isFetching: false,word:array})
+      const dat2=response.data.map((resu,index1)=>{return(resu.results.map((result,index2)=>{return(
+        result.lexicalEntries.map((lexi,index3)=>{if("entries" in lexi){return(
+          lexi.entries.map((entry,index4)=>{if("senses" in entry)
+          {return(entry.senses.map((sense,index5)=>
+            {if(("definitions" in sense) && ("examples" in sense) ){return(<div>
+              <div className="definition"><div>[{lexi.lexicalCategory.id}]</div>
+              <div className="space"></div>
+              <div className="parts"><h3>{sense.definitions[0]
+  
+      }</h3></div></div>
+      
+      <div className="examples">{sense.examples.map((example,index6)=>
+      {return(<div><li>{example.text}</li></div>)})}</div>
+      
+      </div>
+        )}}))}}))}}))}))})
+      
+
+      setData({fetcheddata: dat2, isFetching: false,word:array})
       console.log(Data.word[1])
             
     }catch (exception) {
@@ -59,12 +78,12 @@ if(searching==true && divclick==false){ //if we press search button then it will
   return(
     <div>
       <input type="text" onChange={(e)=>setsearchterm(e.target.value)} />
-      {Data.fetcheddata.filter((val)=>  //filter the data based on the input we enter and returns the words we want
+      {Data.word.filter((val)=>  //filter the data based on the input we enter and returns the words we want
       {
         if(searchterm==""){
           return val
         }
-        else if(val.results[0].id.toLowerCase().includes(searchterm.toLowerCase())){
+        else if(val.toLowerCase().includes(searchterm.toLowerCase())){
           return val
       }
     }
@@ -72,8 +91,8 @@ if(searching==true && divclick==false){ //if we press search button then it will
 
       ).map((data,key)=>{return (
         <div onClick={()=>{setdivclick(true);
-        setsearchedterm(data.results[0].id)}}>
-          {data.results[0].id}
+        setsearchedterm(data)}}>
+          {data}
           </div>
       )})}
 
@@ -83,8 +102,8 @@ if(searching==true && divclick==false){ //if we press search button then it will
 else if(searching===true && divclick===true){ //after searching the words if we press the card we want it will go here
 return(
   <div>
-          {Data.fetcheddata.map((data)=>{
-        if(data.word===searchedterm){ //it will return the card we want
+          {Data.word.map((data,index)=>{
+        if(data===searchedterm){ //it will return the card we want
           return(
             <div>
         <img className="closebutton" onClick={()=>{
@@ -92,9 +111,8 @@ return(
           setdivclick(false);
         }} src="image/close.png" alt="closebutton"  /> 
               
-              <h2>{data.word}</h2>
-            {data.results[0].lexicalEntries[0].entries[0].senses.map(
-              (exam)=><div><li>{exam.definitions[0]}</li></div>)}
+              <h2>{data}</h2>
+            {Data.fetcheddata[index]}
             </div>
 
           )
@@ -105,23 +123,9 @@ return(
 else if(div2click===true){ //if we press the card in the first page or searching page itself the it will go here
   return(
     <div>
-      {Data.fetcheddata.map((data)=>{
-        if(data.word===term){
-          return(
-            <div>
-        <img className="closebutton" onClick={()=>{
-          setdiv2click(false);
-          setsearchedterm("")
-        }} src="image/close.png" alt="closebutton" /> 
-              
-              <h2>{data.word}</h2>
-            {data.results[0].lexicalEntries[0].entries[0].senses.map(
-              (exam)=>
-              <div><li>{exam.definitions[0]}</li></div>)}
-            </div>
-
-          )
-        }})}
+      <img className="closebutton" onClick={()=>{setdiv2click(false)}} src="image/close.png" />
+      <h1>{frontpagedivclick} </h1>
+      {term}
 
     </div>
 
@@ -146,12 +150,13 @@ else {
 
       <div className="Savedwords" onClick={()=>
       {setdiv2click(true);
-      setterm(Data.word[index])
+      setterm(Data.fetcheddata[index])
+      setfrontpagedivclick(Data.word[index])
       }
     }
       >
         <h2>{Data.word[index]}<br/></h2>
-        <h3>{data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]}</h3></div>)})}
+        <h4>{Data.fetcheddata[index][0][0][0][0]}</h4></div>)})}
       <button className="Addbutton" onClick={()=>setModalisOpen(true)}><h2>+</h2></button>
       <Modal isOpen={ModalisOpen} onCloseModal={close} >
         <div className="Dict">

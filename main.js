@@ -6,7 +6,7 @@ const PORT=process.env.PORT||5000
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
 const CONNECTION_URL =process.env.MONGODB_URI||"mongodb://127.0.0.1:27017/" ; //database connection
-const DATABASE_NAME = "dictionary";                  //databasename
+const DATABASE_NAME = "at";                  //databasename
 
 
 const app=express();

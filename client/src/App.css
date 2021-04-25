@@ -10,6 +10,7 @@
 .Vocabulary{
   position: fixed;
   display: flex;
+  color: white;
   
   flex-direction: row;
   justify-content: space-between;
@@ -17,7 +18,7 @@
   width: 100%;
   top: 0px;
   margin-bottom: 50px;
-  background-color:teal;
+  background-color:black;
   border-radius: 5px;
 }
 .Savedwords{
